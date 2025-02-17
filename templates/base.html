@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head <script src="https://unpkg.com/htmx.org@1.9.4"></script>>
+    >
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Price Scraper Tool{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body class="full-page">
+    <div class="sidebar">
+        <h2>📌 Go to</h2>
+        <button onclick="window.location.href='/'" class="nav-button">🏠 Home</button>
+        <button onclick="window.location.href='/manage_data'" class="nav-button">📂 Manage Data</button>
+        <button onclick="window.location.href='/fetch_prices'" class="nav-button">🔍 Fetch Prices</button>
+        <button onclick="window.location.href='/historical_reads'" class="nav-button">📜 Historical Reads</button>
+    </div>
+    <div class="main-content">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
+
+
+
+

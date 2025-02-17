@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Manage Data - Price Scraper Tool{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <!-- Main Content -->
+    <div class="main-content" id="content">
+        <h2 class="heading_manage">📊 Current Data</h2>
+        <div id="data-table" hx-get="/fetch-data" hx-trigger="load" hx-target="#data-table">
+            <p>Loading data...</p>
+        </div>
+        <hr class="sep"> <!-- Separator -->
+    <!-- HTMX Integration -->
+    <script src="https://unpkg.com/htmx.org@1.9.5"></script>
+        <!-- Add Data Section -->
+        <h2 class="heading_manage">➕ Add Data in Database</h2>
+        <form id="add-data-form" hx-post="/add-data" hx-target="#data-message" hx-swap="innerHTML">
+            <p>
+                <label class="add_contents" for="sku_code">SKU Code:</label>
+                <input type="text" id="sku_code" name="sku_code" required>
+            </p>
+            <p>
+                <label class="add_contents" for="product_description">Product Description:</label>
+                <input type="text" id="product_description" name="product_description" required>
+            </p>
+            <p>
+                <label class="add_contents" for="channel_url">Channel URL:</label>
+                <input type="text" id="channel_url" name="channel_url" required>
+            </p>
+            <p>
+                <button class="manage_buttons" type="submit">Add Row</button>
+            </p>
+        </form>
+        <div id="data-message"></div>
+
+        <hr class="sep"> <!-- Separator -->
+
+        <!-- Delete Data Section -->
+        <h2 class="heading_manage">❌ Delete Data from Database</h2>
+        <form id="delete-data-form" hx-post="/delete-data" hx-target="#delete-message" hx-swap="innerHTML">
+            <p>
+                <label class="add_contents" for="delete_sku_code">Enter SKU Code to Delete:</label>
+                <input type="text" id="delete_sku_code" name="delete_sku_code" required>
+            </p>
+            <p>
+                <button class="manage_buttons" type="submit">Delete Row</button>
+            </p>
+        </form>
+        <div id="delete-message"></div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container_fetch">
+    <h1 class="page_title">📜 Fetch Historical Price Data</h1>
+    <p></p>
+    <button id="fetch-historical-btn" class="fetch_button">Fetch Historical Prices</button>
+    <div id="historical-data"></div>
+</div>
+
+<script>
+    document.getElementById("fetch-historical-btn").addEventListener("click", function() {
+        fetch("/fetch_historical")
+        .then(response => response.json())
+        .then(data => {
+            let resultDiv = document.getElementById("historical-data");
+            resultDiv.innerHTML = "<h3>📊 Historical Prices</h3>";
+            if (data.length === 0) {
+                resultDiv.innerHTML += "<p class='error'>No historical data found.</p>";
+            } else {
+                let table = '<div class="table-container"><table><tr><th>SKU Code</th><th>Product Description</th><th>Sales Channel</th><th>Price (INR)</th><th>Timestamp</th></tr>';
+                data.forEach(row => {
+                    table += `<tr><td>${row.SKU_CODE}</td><td>${row.Product_Description}</td><td>${row.Sales_Channel}</td><td>${row.Price_INR}</td><td>${row.Timestamp}</td></tr>`;
+                });
+                table += "</table>";
+                resultDiv.innerHTML += table;
+
+                // Add download button
+                resultDiv.innerHTML += `<a href="/download_historical" class="download-button">Download CSV</a>`;
+            }
+        });
+    });
+</script>
+{% endblock %}

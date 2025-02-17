@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container_fetch">
+    <h1 class="page-title">🔍 Fetch Prices from Dataset</h1>
+    <button id="fetch-prices-btn" class="fetch-button">Fetch Latest Prices</button>
+    <div id="price-results"></div>
+</div>
+
+<script>
+    function fetchPricesWithRetry(retries = 3) {
+        let resultDiv = document.getElementById("price-results");
+        resultDiv.innerHTML = "<p class='loading'>⏳ Fetching prices, please wait...</p>";
+
+        fetch("/fetch_prices_api")
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            resultDiv.innerHTML = "<h3>📊 Fetched Prices</h3>";
+
+            if (data.length === 0) {
+                if (retries > 0) {
+                    console.warn(`No prices fetched. Retrying... (${retries} attempts left)`);
+                    setTimeout(() => fetchPricesWithRetry(retries - 1), 3000);  // Retry after 3 seconds
+                    return;
+                }
+                resultDiv.innerHTML += "<p class='error'>⚠️ Prices couldn't be fetched. Try again later.</p>";
+                return;
+            }
+
+            // Create table for displaying prices
+            let table = `<div class="table-container"><table>
+                            <tr><th>SKU Code</th><th>Product Description</th><th>Channel URL</th><th>Channel Name</th><th>Price (INR)</th><th>Timestamp</th></tr>`;
+            data.forEach(row => {
+                table += `<tr>
+                            <td>${row.SKU_CODE}</td>
+                            <td>${row.Product_Description}</td>
+                            <td><a href="${row.Channel_wise_URL}" target="_blank">🔗 Link</a></td>
+                            <td>${row.Channel_Name}</td>
+                            <td>${row.Price}</td>
+                            <td>${row.Timestamp}</td>
+                          </tr>`;
+            });
+            table += "</table></div>";
+
+            resultDiv.innerHTML += table;
+            resultDiv.innerHTML += `<a href="/download_prices" class="download-button" download="fetched_prices.csv">Download CSV</a>`;
+        })
+        .catch(error => {
+            console.error("Error fetching prices:", error);
+            resultDiv.innerHTML = "<p class='error'>⚠️ Error fetching prices. Please check your network and try again.</p>";
+        });
+    }
+
+    document.getElementById("fetch-prices-btn").addEventListener("click", function() {
+        fetchPricesWithRetry();
+    });
+</script>
+{% endblock %}
+

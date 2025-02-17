@@ -1,0 +1,267 @@
+.container {
+    display: flex;
+}
+
+.sidebar {
+    width: 300px;
+    padding: 20px;
+    height: 100vh;
+    position: fixed;
+    background-color: yellow;
+    top: 0;
+    left: 0;
+}
+
+.nav-button {
+    width: 100%;
+    padding: 20px;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.nav-button:hover {
+    background-color: #0056b3;
+}
+
+.main-content {
+    margin-left: 270px;
+    padding: 25px;
+}
+
+.full-page {
+    background-color: lightgreen;
+}
+
+.heading_home {
+    font-size: 40px;
+}
+
+.para1_home {
+    font-size: 20px;
+    margin-left: 20px;
+    margin-top: 40px;
+}
+
+.para2_home {
+    font-size: 20px;
+    margin-left: 20px;
+}
+
+.heading_manage {
+    font-size: 30px;
+}
+
+.add_contents {
+    padding: 10px;
+    font-size: 20px;
+    border-radius: 7px
+}
+
+.manage_buttons {
+    padding: 10px;
+    margin-top: 20px;
+    margin-left: 10px;
+    border-radius: 7px
+}
+
+.container_fetch {
+    margin: 20px auto;
+    padding: 20px;
+}
+
+.page-title {
+    font-size: 40px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.fetch-button {
+    margin-left: 450px;
+    margin-top: 110px;
+    display: block;
+    width: 20%;
+    padding: 10px;
+    background: white;
+    color: black;
+    border-radius: 7px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.fetch-button:hover {
+    background: #0056b3;
+}
+
+.error {
+    color: red;
+    font-weight: bold;
+    text-align: center;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+th {
+    background: #007bff;
+    color: white;
+}
+
+.download-button {
+    display: block;
+    margin: 20px auto;
+    padding: 10px;
+    background: #28a745;
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.download-button:hover {
+    background: #218838;
+}
+
+.page_title {
+    font-size: 40px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.fetch_button {
+    margin-left: 450px;
+    margin-top: 110px;
+    display: block;
+    width: 20%;
+    padding: 10px;
+    background: white;
+    color: black;
+    border-radius: 7px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.sep {
+    margin: 0;
+    width: 50vw;
+    height: 2px;
+    color: darkred;
+    margin-top: 20px;
+}
+
+.download-button {
+    margin-left: 450px;
+    margin-top: 40px;
+    display: block;
+    width: 20%;
+    padding: 10px;
+    background: green;
+    color: white;
+    border-radius: 7px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#price-results {
+    display: flex;
+    justify-content: center;  /* Center the table horizontally */
+    align-items: center;  /* Align content properly */
+    flex-direction: column;
+    width: 100%;
+}
+
+#price-results table {
+    width: 80%; /* Adjust table width */
+    border-collapse: collapse;
+    text-align: center;
+    margin-left: 80px;
+}
+
+#price-results table th, #price-results table td {
+    padding: 10px;
+    border: 2px solid black;
+}
+
+/* Add horizontal scroll if content overflows */
+.table-container {
+    overflow-x: auto;
+    width: 90%;  /* Adjust width */
+    margin: auto; /* Center the container */
+    white-space: nowrap; /* Prevent content from wrapping */
+}
+
+#historical-data {
+    display: flex;
+    justify-content: center;  /* Center the table horizontally */
+    align-items: center;  /* Align content properly */
+    flex-direction: column;
+    width: 100%;
+}
+
+#historical-data table {
+    width: 80%; /* Adjust table width */
+    border-collapse: collapse;
+    text-align: center;
+    margin-left: 80px;
+}
+
+#historical-data table th, #historical-data table td {
+    padding: 10px;
+    border: 2px solid black;
+}
+
+/* Style the table */
+.data-table {
+    width: 60%; /* Reduce table width */
+    border-collapse: collapse;
+    text-align: center;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Table headers */
+.data-table thead {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Table rows */
+.data-table td, .data-table th {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+}
+
+/* Zebra-striping for rows */
+.data-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Adjust column widths */
+.data-table th:nth-child(2), 
+.data-table td:nth-child(2) {
+    max-width: 1000px;  /* Reduce Channel URL column width */
+    white-space: nowrap;  /* Prevent text wrapping */
+    overflow: hidden;
+    text-overflow: ellipsis;  /* Show "..." for overflow */
+}
