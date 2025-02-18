@@ -10,7 +10,7 @@ cursor.execute("""
         SKU_CODE INT NOT NULL,
         Product_Description TEXT NOT NULL,
         Sales_Channel TEXT NOT NULL,
-        Price REAL NOT NULL,
+        Price TEXT NOT NULL,
         Timestamp TEXT NOT NULL
     )
 """)

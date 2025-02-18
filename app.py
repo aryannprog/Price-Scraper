@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, jsonify, send_file
+from flask import Flask, request, render_template, jsonify, send_file, Response
 import sqlite3
 from scraper import identify_sales_channel, fetch_price  # Import your scraping function
 import pandas as pd
@@ -97,17 +97,22 @@ def fetch_historical():
 def download_csv():
     try:
         if os.path.exists(TEMP_CSV_PATH) and os.path.getsize(TEMP_CSV_PATH) > 0:
-            # Send the file for download
-            response = send_file(TEMP_CSV_PATH, as_attachment=True, download_name="fetched_prices.csv")
+            # Read CSV content
+            with open(TEMP_CSV_PATH, "r") as f:
+                csv_data = f.read()
 
-            # After sending the file, clear its content
+            # Clear the file after reading
             open(TEMP_CSV_PATH, 'w').close()
+
+            # Create a proper response for CSV download
+            response = Response(csv_data, mimetype="text/csv")
+            response.headers["Content-Disposition"] = "attachment; filename=fetched_prices.csv"
 
             return response
         else:
             return jsonify({"error": "No data available. Please fetch data first."}), 400
     except Exception as e:
-        return jsonify({"error": "Something went wrong."}), 500
+        return jsonify({"error": f"Something went wrong: {str(e)}"}), 500
 
 # Generate and provide CSV for download
 @app.route("/download_historical", methods=["GET"])

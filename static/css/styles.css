@@ -70,6 +70,10 @@
     border-radius: 7px
 }
 
+.manage_buttons:hover {
+    background: #0056b3;
+}
+
 .container_fetch {
     margin: 20px auto;
     padding: 20px;
