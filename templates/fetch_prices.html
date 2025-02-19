@@ -27,7 +27,7 @@
         });
     }
 
-    function fetchPricesWithRetry(retries = 3) {
+    function fetchPricesWithRetry(retries = 5, delay=2) {
         let resultDiv = document.getElementById("price-results");
         resultDiv.innerHTML = "<p class='loading'>⏳ Fetching prices, please wait...</p>";
 
@@ -85,18 +85,5 @@
     // Load last fetched time on page load
     document.addEventListener("DOMContentLoaded", updateLastFetchedTime);
 </script>
-
-<style>
-    .fetch-container {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-    }
-    
-    .last-fetched {
-        font-size: 14px;
-        color: #555;
-    }
-</style>
 {% endblock %}
 

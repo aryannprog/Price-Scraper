@@ -274,7 +274,7 @@ def identify_sales_channel(url):
             return channel
     return 'NA'
 
-def fetch_price(channel, url, retries=3, delay=2):
+def fetch_price(channel, url, retries=5, delay=3):
     log = []
     
     for attempt in range(1, retries + 1):
