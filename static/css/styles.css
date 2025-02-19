@@ -38,10 +38,6 @@
     background-color: lightgreen;
 }
 
-.heading_home {
-    font-size: 40px;
-}
-
 .para1_home {
     font-size: 20px;
     margin-left: 20px;
@@ -58,16 +54,46 @@
 }
 
 .add_contents {
-    padding: 10px;
+    padding: 7px;
     font-size: 20px;
     border-radius: 7px
+}
+
+.form-row {
+    display: flex;
+    justify-content: start;  /* Aligns items to the left */
+    gap: 30px;  /* Adjust spacing between form sections */
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column; /* Keep label above input */
+}
+
+.form-group input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 200px;  /* Fixed width for all input fields */
+}
+
+/* Moves Product Description slightly to the right */
+.shift-right {
+    margin-left: 30px;
+}
+
+/* Moves Channel URL even further right */
+.shift-right-more {
+    margin-left: 60px;
 }
 
 .manage_buttons {
     padding: 10px;
     margin-top: 20px;
     margin-left: 10px;
-    border-radius: 7px
+    border-radius: 7px;
 }
 
 .manage_buttons:hover {
@@ -79,8 +105,8 @@
     padding: 20px;
 }
 
-.page-title {
-    font-size: 40px;
+.page_title {
+    font-size: 30px;
     color: #333;
     text-align: center;
     margin-bottom: 50px;
@@ -88,7 +114,7 @@
 
 .fetch-button {
     margin-left: 450px;
-    margin-top: 110px;
+    margin-top: 70px;
     display: block;
     width: 20%;
     padding: 10px;
@@ -98,6 +124,23 @@
     text-align: center;
     cursor: pointer;
     font-size: 16px;
+}
+
+.last-fetched {
+    font-size: 18px;
+    color: red; /* Make text red */
+    font-weight: bold;
+    margin-left: 60px; /* Ensure some spacing */
+    white-space: nowrap; /* Prevents text wrapping */
+    margin-top: 75px;
+}
+
+.last-fetched .label {
+    color: red;  /* Keep 'Last fetched:' red */
+}
+
+.last-fetched .value {
+    color: black;  /* Keep the fetched timestamp black */
 }
 
 .fetch-button:hover {
@@ -268,4 +311,30 @@ th {
     white-space: nowrap;  /* Prevent text wrapping */
     overflow: hidden;
     text-overflow: ellipsis;  /* Show "..." for overflow */
+}
+
+/* Scrollable table section */
+.scrollable-table {
+    max-height: 300px; /* Height to fit ~10 rows */
+    overflow-y: auto;  /* Enables vertical scrolling */
+}
+
+/* Table styling */
+.scrollable-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Style for table headers */
+.scrollable-table th {
+    position: sticky;
+    top: 0;
+    background-color: blue;
+    z-index: 2;
+}
+
+/* Optional: Add some padding and borders */
+.scrollable-table th, .scrollable-table td {
+    padding: 10px;
+    text-align: center;
 }

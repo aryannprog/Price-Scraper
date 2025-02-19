@@ -2,12 +2,31 @@
 
 {% block content %}
 <div class="container_fetch">
-    <h1 class="page-title">🔍 Fetch Prices from Dataset</h1>
-    <button id="fetch-prices-btn" class="fetch-button">Fetch Latest Prices</button>
+    <h1 class="page_title">🔍 Fetch Prices from Dataset</h1>
+
+    <div class="fetch-container">
+        <button id="fetch-prices-btn" class="fetch-button">Fetch Latest Prices</button>
+        <span id="last-fetched-time" class="last-fetched">
+            <span class="label">Last Fetched Time:</span>
+            <span class="value">--</span>
+        </span>        
+    </div>
     <div id="price-results"></div>
 </div>
 
 <script>
+    function updateLastFetchedTime() {
+        fetch("/get_last_fetched_time")
+        .then(response => response.json())
+        .then(data => {
+            document.querySelector("#last-fetched-time .value").textContent = data.last_fetched;
+        })
+        .catch(error => {
+            console.error("Error fetching last fetched time:", error);
+            document.querySelector("#last-fetched-time .value").textContent = "N/A";
+        });
+    }
+
     function fetchPricesWithRetry(retries = 3) {
         let resultDiv = document.getElementById("price-results");
         resultDiv.innerHTML = "<p class='loading'>⏳ Fetching prices, please wait...</p>";
@@ -49,6 +68,9 @@
 
             resultDiv.innerHTML += table;
             resultDiv.innerHTML += `<a href="/download_prices" class="download-button" download="fetched_prices.csv">Download CSV</a>`;
+
+            // Update last fetched time
+            updateLastFetchedTime();
         })
         .catch(error => {
             console.error("Error fetching prices:", error);
@@ -59,6 +81,22 @@
     document.getElementById("fetch-prices-btn").addEventListener("click", function() {
         fetchPricesWithRetry();
     });
+
+    // Load last fetched time on page load
+    document.addEventListener("DOMContentLoaded", updateLastFetchedTime);
 </script>
+
+<style>
+    .fetch-container {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    .last-fetched {
+        font-size: 14px;
+        color: #555;
+    }
+</style>
 {% endblock %}
 

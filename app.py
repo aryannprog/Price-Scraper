@@ -25,11 +25,6 @@ def manage_data():
 def fetch_prices():
     return render_template('fetch_prices.html')
 
-# Manage Data page
-@app.route('/historical_reads')
-def historical_reads():
-    return render_template('historical_reads.html')
-
 # Function to fetch latest prices
 @app.route('/fetch_prices_api')
 def fetch_prices_api():
@@ -70,26 +65,49 @@ def fetch_prices_api():
         print(f"Error: {e}")  # Debugging in terminal
         return jsonify([])  # Return empty list in case of error
     
-# Fetch historical data from database
-@app.route("/fetch_historical")
+def get_last_fetched_time_from_db():
+    conn = sqlite3.connect("historical.db")
+    cursor = conn.cursor()
+    cursor.execute("SELECT Timestamp FROM prices ORDER BY Timestamp DESC LIMIT 1")
+    last_fetched = cursor.fetchone()
+    conn.close()
+    return last_fetched[0] if last_fetched else "N/A"
+
+@app.route("/get_last_fetched_time")
+def get_last_fetched_time():
+    last_fetched_time = get_last_fetched_time_from_db()
+    return jsonify({"last_fetched": last_fetched_time})    
+    
+@app.route("/fetch_historical", methods=["GET"])
 def fetch_historical():
-    try:
-        conn = sqlite3.connect("historical.db")
-        cursor = conn.cursor()
-        cursor.execute("SELECT SKU_CODE, Product_Description, Sales_Channel, Price, Timestamp FROM prices")
-        data = cursor.fetchall()
-        conn.close()
+    conn = sqlite3.connect('historical.db')
+    cursor = conn.cursor()
+    cursor.execute("SELECT SKU_CODE, Product_Description, Sales_Channel, Price, Timestamp FROM prices")
+    rows = cursor.fetchall()
+    conn.close()
 
-        # Convert to JSON format
-        history = [
-            {"SKU_CODE": row[0], "Product_Description": row[1], "Sales_Channel": row[2], "Price": row[3], "Timestamp": row[4]}
-            for row in data
-        ]
+    if not rows:
+        return "<p class='error'>No historical data found.</p>"
 
-        return jsonify(history)
+    # HTML table format
+    table_html = '''
+    <div class="table-container">
+        <table>
+            <tr>
+                <th>SKU Code</th>
+                <th>Product Description</th>
+                <th>Sales Channel</th>
+                <th>Price (INR)</th>
+                <th>Timestamp</th>
+            </tr>
+    '''
+    for row in rows:
+        price_display = row[3] if row[3] is not None else "N/A"
+        table_html += f"<tr><td>{row[0]}</td><td>{row[1]}</td><td>{row[2]}</td><td>{price_display}</td><td>{row[4]}</td></tr>"
 
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+    table_html += "</table></div>"
+
+    return table_html
 
 
 # Function to download fetched prices as CSV and then clear the file

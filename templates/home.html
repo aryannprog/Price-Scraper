@@ -1,17 +1,30 @@
 {% extends "base.html" %}
-
-{% block title %}Home - Price Scraper Tool{% endblock %}
-
 {% block content %}
-<div class="container">
-    <!-- Main Content -->
-    <div class="main-content" id="content">
-        <h1 class="heading_home">📊 Welcome to Price Scraper Tool</h1>
-        <p class="para1_home">This tool helps you <strong>store product details, fetch prices</strong> and <strong>analyze trends</strong> across different sales channels.</p>
-        <p class="para2_home">📌 Use the sidebar to navigate.</p>
+<div class="container_fetch">
+    <h2 class="page_title">📜 Historical Price Data</h2>
+
+    <!-- Table container -->
+    <div id="historical-data">
+        <p>Loading historical data...</p>
+    </div>
+
+    <!-- Download Button -->
+    <div class="download-container">
+        <a href="/download_historical" class="download-button">Download CSV</a>
     </div>
 </div>
+
+<script>
+    // Fetch historical data on page load
+    document.addEventListener("DOMContentLoaded", function() {
+        fetch("/fetch_historical")
+        .then(response => response.text())  // Expecting HTML response
+        .then(data => {
+            document.getElementById("historical-data").innerHTML = data;
+        })
+        .catch(error => {
+            document.getElementById("historical-data").innerHTML = "<p class='error'>Failed to load data.</p>";
+        });
+    });
+</script>
 {% endblock %}
-
-
-
